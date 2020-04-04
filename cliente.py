@@ -58,7 +58,7 @@ if __name__ == "__main__":
         if "376" in resp:
             client.select_channel()
 
-        if "366" in resp:
+        if "/NAMES list" in resp:
             accepted = True
        
     print("sending..")

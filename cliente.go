@@ -21,7 +21,7 @@ func main() {
 
 	fmt.Fprintf(conn, "USER %s 8 * :%s\r\n", "GustavoKirchbnet", "GustavoKirchbnet")
 	fmt.Fprintf(conn, "NICK %s\r\n", "NestorKirchner")
-	fmt.Fprintf(conn, "JOIN %s\r\n", "#bitcoin")
+	fmt.Fprintf(conn, "JOIN %s\r\n", "#gus-challenge")
 
 	// Cpturamos la respuesta
 	reader := bufio.NewReader(conn)
@@ -45,6 +45,6 @@ func main() {
 	}
 	//enviamos mensaje
 
-	fmt.Fprintf(conn, "PRIVMSG #bitcoin  :Hola !\r\n")
+	fmt.Fprintf(conn, "PRIVMSG #gus-challenge  :Hola desde bot Go!\r\n")
 
 }

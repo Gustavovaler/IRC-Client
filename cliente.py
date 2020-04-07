@@ -1,17 +1,20 @@
 import socket
 import time
+from ircUI import ui
 
 
 server = "irc.freenode.net"
 port = 6667
-channel = "#bitcoin"
-username = "Gambito123"
-msg = " :Hola  !"
+channel = "#gus-challenge"
+username = "Gambito-x"
+msg = " :Hola dede bot Py !"
 
-#implementamos una clase cliente.
+# implementamos una clase cliente.
+
+
 class UserClient:
 
-    def __init__(self, server, port, user,channel,msg):
+    def __init__(self, server, port, user, channel, msg):
         self.server = server
         self.port = port
         self.channel = channel
@@ -27,11 +30,11 @@ class UserClient:
     def get_response(self):
         return self.conn.recv(512).decode("utf-8")
 
-    #Este metodo envia info de log
-    def send(self,nick):
+    # Este metodo envia info de log
+    def send(self, nick):
         self.conn.send(nick)
 
-    #este sirve para formatear los mensajes
+    # este sirve para formatear los mensajes
     def prepare(self, cmd, message):
         command = "{} {}\r\n".format(cmd, message).encode("utf-8")
         self.conn.send(command)
@@ -41,26 +44,29 @@ class UserClient:
         chan = "JOIN  {}\r\n".format(self.channel).encode("utf-8")
         self.conn.send(chan)
 
-    #envia el mensaje al canal
+    # envia el mensaje al canal
     def send_message(self):
         send = "PRIVMSG {} \r\n".format(self.msg)
         print(send)
-        self.conn.send("PRIVMSG {} {}\r\n".format(self.channel,self.msg).encode())
+        self.conn.send("PRIVMSG {} {}\r\n".format(
+            self.channel, self.msg).encode())
 
 
 if __name__ == "__main__":
 
-    #creamos la instancia
-    client = UserClient(server, port, username, channel,msg)
+    ui = ui.Window()
+
+    # creamos la instancia
+    client = UserClient(server, port, username, channel, msg)
     accepted = False
-    #conectamos
+    # conectamos
     client.connect()
 
     # Bucle para establecer la coneccio  y entrada al canal
     while accepted == False:
         resp = client.get_response()
         print(resp.strip())
-        
+
         if "No Ident response" in resp:
             client.prepare("NICK", username)
             client.prepare("USER", "{} * * :{}".format(username, username))
@@ -70,14 +76,10 @@ if __name__ == "__main__":
 
         if "/NAMES list" in resp:
             accepted = True
-    
-    #enviamos el mensaje y fin del programa 
+
+    # enviamos el mensaje y fin del programa
     print("sending..")
+
     time.sleep(1)
     client.send_message()
-
-
-
-
-
-
+    ui.mensaje("algo")

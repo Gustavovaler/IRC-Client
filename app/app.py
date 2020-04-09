@@ -129,6 +129,11 @@ def check():
     v.displayMsg()
 
 
+def resetData():
+    f = open("datos/data.txt", "w")
+    f.close()
+
+
 def bot():
     # creamos la instancia
     client = UserClient(server, port, username, channel, msg)
@@ -181,8 +186,9 @@ def startApp():
 #--------------------------------------------------
 
 
-v = Window(server, port, channel, username)
+resetData()
 
+v = Window(server, port, channel, username)
 
 startApp()
 v.ventana.mainloop()
